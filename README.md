@@ -3,7 +3,7 @@
 #### Team Members: Peter Hoagland, Alena Matusevich, and Lillian Ruelas-Thompson (All code and analysis from all members)
 #### Data source: https://www.kaggle.com/code/noobiedatascientist/feature-selection-in-the-nba/input?select=ranking.csv, season_id_lookup.csv, Season_Stats.csv, team_abrev_lookup.csv, year_team_abrev_lookup.csv 
 #### Summary:
-Basketball season is in full effect and we are trying to predict the number of wins for a new season based on previous seasons using the columns below from combining the csv files above and creating a team_stats_final.csv file. 
+Basketball season is in full effect and we are trying to train a model that will predict the number of wins a team will reach in a season using the columns below by combining the csv files above and creating a team_stats_final.csv file. 
 ##### team_name	abv	pts_per_min	2fg_pct	3fg_pct	ts_pct	dbpm_tot	obpm_tot	wins_tot
 
 The description of the columns above are broken down below:
@@ -43,7 +43,9 @@ Based on the calculated columns and training a model, we hope to answer these qu
 For this project, we used a Decision Tree model and a Neural Network model and we optimized the models to get the most accurate score by updating and removing columns, increasing epochs, using different activations, as well as creating visualizations such as the importance_features to determine the optimal columns to be used for the models.
 
 #### Results:
-Using a Decision Tree model, we were able to reach a r2 score of 0.759, which is really close the the 0.80 score that is required. In order to reach this score, we had to drop many columns, and normalize the dbpm_tot and obpm_tot values than using the absolute values.  We also added the Year column and did not use any of the categorical columns that were initially included in the columns we were going to test. Those columns that were removed included the team name and abbreviation. Using the Decision Tree model, we were also able to visualize and look at the importance features, which gave us more of an idea of which features were more valuable for the model.
+Using a Decision Tree model, we were able to reach a r2 score of 0.759, which is really close the the 0.80 score that is required. In order to reach this score, we had to drop many columns, and normalize the dbpm_tot and obpm_tot values by dividing their weighted sums by the team's total minutes.  We also added the Year column and dropped the categorical columns and columns pertaining to team wins/losses/games played. The removed categorical columns included the team name and abbreviation. Using the Decision Tree model, we were also able to analyze the importance of the features, which gave us more of an idea of which features were more valuable for the model.
+
+The neural network model was originally run to confirm our choices in features to train the model. The Keras-Tuner was run only going to 20 epochs (to save time) with three separate combinations of features: the six main team stats, the six stats in addition to the year, and then all the numerical stats. These initial runs showed that including the year was important for training the model, while including stats other than the six major stats did not noticeably improve the model. The Keras-Tuner was then run to 100 epochs and an RMSE value of 3.71 and r2 value of 0.895 was obtained.
 
 From our models, we were able to answer the questions we had proposed.
 
@@ -51,4 +53,4 @@ From our models, we were able to answer the questions we had proposed.
   * Based on the data that was used the best type of model that gave the most accurate predictions was the Neural Network model, however, in using the decision tree model, we were able to see which features were more important than others, and how we needed to trim the columns to run both models.
 
 * #### What statistics fed into the model inform the model the most? Common statistics include a team’s previous record, offensive rating, defensive rating, and the team’s player’s individual statistics?
-  *  We used about the same columns and data points for each ML model, and we were able to determine that the obpm_norm (Offensive Box Plus) and the dbpm_norm (Defense Box Plus) informed both models the most.
+  *  We used mostly the same columns and data points for each ML model, and we were able to determine that the obpm_norm (Normalized Offensive Box Plus/Minus) and the dbpm_norm (Normalized Defense Box Plus/Minus) informed both models the most. We also found that, due to shooting trends across the time period analyzed, including the Year improved the accuracy of both models.​
