@@ -1,9 +1,12 @@
 # Project-4
 ### From Courtside to Spreadsheet: Unveiling Basketball Analytics
 #### Team Members: Peter Hoagland, Alena Matusevich, and Lillian Ruelas-Thompson (All code and analysis from all members)
-#### Data source: https://www.kaggle.com/code/noobiedatascientist/feature-selection-in-the-nba/input?select=ranking.csv, season_id_lookup.csv, Season_Stats.csv, team_abrev_lookup.csv, year_team_abrev_lookup.csv 
+#### Data source: https://www.kaggle.com/datasets/nathanlauga/nba-games?select=ranking.csv,
+####              https://www.kaggle.com/datasets/drgilermo/nba-players-stats?resource=download,
+####              season_id_lookup.csv, Season_Stats.csv, team_abrev_lookup.csv, year_team_abrev_lookup.csv 
 #### Summary:
-Basketball season is in full effect and we are trying to train a model that will predict the number of wins a team will reach in a season using the columns below by combining the csv files above and creating a team_stats_final.csv file. 
+Basketball season is in full effect and we are trying to train a model that will predict the number of wins a team will reach in a season using the columns below by combining the csv files above and creating a team_stats_final.csv file. The csv files are all stored in the Resources folder and the code used to clean the data is in the file Project4_data_cleanup.ipynb. 
+
 ##### team_name	abv	pts_per_min	2fg_pct	3fg_pct	ts_pct	dbpm_tot	obpm_tot	wins_tot
 
 The description of the columns above are broken down below:
@@ -40,7 +43,7 @@ Based on the calculated columns and training a model, we hope to answer these qu
 * #### What statistics fed into the model inform the model the most? Common statistics include a team’s previous record, offensive rating, defensive rating, and the team’s player’s individual statistics?
 
 #### Machine Learning Models Used:
-For this project, we used a Decision Tree model and a Neural Network model and we optimized the models to get the most accurate score by updating and removing columns, increasing epochs, using different activations, as well as creating visualizations such as the importance_features to determine the optimal columns to be used for the models.
+For this project, we used a Decision Tree model and a Neural Network model and we optimized the models to get the most accurate score by updating and removing columns, increasing epochs, using different activations, as well as creating visualizations such as the importance_features to determine the optimal columns to be used for the models. The code used to create the the decision tree model is in the file model_optimization_decision_tree_colab.ipynb. The code used for the Neural Network model is in separate files due to Keras-Tuner compatibility. The file with the six main stats is model_optimization_colab_neural.ipynb, the file using the six main stats with the Year column is model_optimization_colab_neural_year.ipynb, and the file using all the stats is model_optimization_colab_neural_year.ipynb. 
 
 #### Results:
 Using a Decision Tree model, we were able to reach a r2 score of 0.759, which is really close the the 0.80 score that is required. In order to reach this score, we had to drop many columns, and normalize the dbpm_tot and obpm_tot values by dividing their weighted sums by the team's total minutes.  We also added the Year column and dropped the categorical columns and columns pertaining to team wins/losses/games played. The removed categorical columns included the team name and abbreviation. Using the Decision Tree model, we were also able to analyze the importance of the features, which gave us more of an idea of which features were more valuable for the model.
